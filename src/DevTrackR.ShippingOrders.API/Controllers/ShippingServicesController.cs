@@ -1,3 +1,4 @@
+using DevTrackR.ShippingOrders.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevTrackR.ShippingOrders.API.Controllers
@@ -6,9 +7,14 @@ namespace DevTrackR.ShippingOrders.API.Controllers
     [Route("api/shipping-services")]
     public class ShippingServicesController : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> GetAll() {
-            return Ok();
+        private readonly IShippingServiceService _service;
+
+        public ShippingServicesController(IShippingServiceService service)
+        {
+            _service = service;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll() => Ok(await _service.GetAll());
     }
 }
